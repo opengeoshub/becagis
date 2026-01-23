@@ -1,22 +1,20 @@
-[![image](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 <!-- PROJECT LOGO -->
 <p align="center">
+    <img src="images/becagis_logo.png" alt="Logo" width="90" height="75">
   <h3 align="center">BecaGIS</h3>
   <p align="center">
     <b><i>GeoProcessing Tools for QGIS</i><b>
     <br />
   </p>
 </p>
- <div align="center">
-  <img src="images/tutorial/vect_voronoi.png">
-</div>
 
-
+## Descriptions
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>GeoProcessing Tools for QGIS</summary>
- 
+  <div align="center">
+  <img src="images/tutorial/vect_voronoi.png">
+</div>
   <ol>
     <li>         
       <a href="#vector">Vector</a>     

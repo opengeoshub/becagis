@@ -32,14 +32,14 @@ __revision__ = '$Format:%H$'
 import os
 import sys
 import inspect
-from PyQt5.QtWidgets import *
+from qgis.PyQt.QtWidgets import *
 from qgis.core import (QgsProcessingAlgorithm,
                        QgsApplication,
                        QgsExpression)
 # from PyQt5.QtCore import QCoreApplication
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from qgis.PyQt.QtCore import *
+from qgis.PyQt.QtGui import *
 
 from .becagis_provider import becagisProvider
 from .expressions import *

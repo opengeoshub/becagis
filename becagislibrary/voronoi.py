@@ -15,7 +15,7 @@ __copyright__ = '(L) 2022 by Thang Quach'
 import processing
 from qgis.core import *
 import numpy as np
-from PyQt5.QtCore import *
+from qgis.PyQt.QtCore import *
 
 def splitpolygon(layer, parts,random_points):		
     parameters1 = {'INPUT': layer,
