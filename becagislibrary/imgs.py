@@ -14,8 +14,15 @@
 __author__ = 'Thang Quach'
 __date__ = '2022-08-25'
 __copyright__ = '(L) 2022 by Thang Quach'
-import math, os, base64, PIL.Image
+import math, os, base64
 from math import atan, pi, sqrt, floor
+
+try:
+    from qgis.PyQt.QtGui import QImage
+    from qgis.PyQt.QtCore import Qt
+except ImportError:
+    QImage = None
+    Qt = None
 
 # Imagem para HTML
 def img2html(path_file):
@@ -28,21 +35,23 @@ def img2html(path_file):
 
 # Redimensionar Imagem
 def ImgResize(path_file, lado, resized):
-    caminho, arquivo = os.path.split(path_file)
-    img = PIL.Image.open(path_file)
-    altura = img.size[1]
-    largura = img.size[0]
+    if QImage is None:
+        raise RuntimeError("QImage not available (run inside QGIS)")
+    img = QImage(path_file)
+    if img.isNull():
+        raise ValueError("Could not load image: {}".format(path_file))
+    altura = img.height()
+    largura = img.width()
     if largura < altura:
         new_height = lado
-        new_width =int(lado/float(altura)*largura)
+        new_width = int(lado / float(altura) * largura)
     else:
         new_width = lado
-        new_height =int(lado/float(largura)*altura)
-
-    img = img.resize((new_width, new_height))
-    path_file_reduced = os.path.join(caminho, resized)
-    img.save(path_file_reduced)
-    del img
+        new_height = int(lado / float(largura) * altura)
+    img = img.scaled(new_width, new_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+    path_file_reduced = os.path.join(os.path.split(path_file)[0], resized)
+    if not img.save(path_file_reduced):
+        raise IOError("Could not save resized image to {}".format(path_file_reduced))
     return path_file_reduced
 
 # Image to HTML resized
