@@ -14,15 +14,10 @@
 __author__ = 'Thang Quach'
 __date__ = '2022-08-25'
 __copyright__ = '(L) 2022 by Thang Quach'
-import math, os, base64
+import os, base64
 from math import atan, pi, sqrt, floor
-
-try:
-    from qgis.PyQt.QtGui import QImage
-    from qgis.PyQt.QtCore import Qt
-except ImportError:
-    QImage = None
-    Qt = None
+from qgis.PyQt.QtGui import QImage
+from qgis.PyQt.QtCore import Qt
 
 # Imagem para HTML
 def img2html(path_file):
@@ -34,9 +29,7 @@ def img2html(path_file):
     return texto
 
 # Redimensionar Imagem
-def ImgResize(path_file, lado, resized):
-    if QImage is None:
-        raise RuntimeError("QImage not available (run inside QGIS)")
+def ImgResize(path_file, lado, resized):   
     img = QImage(path_file)
     if img.isNull():
         raise ValueError("Could not load image: {}".format(path_file))
