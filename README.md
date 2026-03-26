@@ -79,7 +79,7 @@ The closest and farthest pair of Points
 
 The most isololated point of a point set
 <div align="center">
-  <img src="images/readme/vect_isolation.png">
+  <img src="images/readme/isolation.png">
 </div>
 
 ### LEC

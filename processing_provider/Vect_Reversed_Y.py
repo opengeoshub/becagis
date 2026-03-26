@@ -72,7 +72,7 @@ class Reversed_Y(QgsProcessingAlgorithm):
         return self.tr('Reversed Y, Reversed Lat').split(',')
 
     def icon(self):
-        return QIcon(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images/vect_reversed_y.png'))
+        return QIcon(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images/vect_reversed_y.svg'))
 
     txt_en = 'Reversed_Y Layer'
     txt_vi = 'Reversed_Y Layer'

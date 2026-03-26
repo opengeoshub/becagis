@@ -79,7 +79,7 @@ class SplitPolygon(QgsProcessingAlgorithm):
         return self.tr('split polygon, voronoi diagram').split(',')
 
     def icon(self):
-        return QIcon(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images/vect_split_polygon.png'))
+        return QIcon(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images/vect_split_polygon.svg'))
 
     txt_en = 'Split Polygon layer into almost equal parts using Voronoi Diagram'
     txt_vi = 'Split Polygon layer into almost equal parts using Voronoi Diagram'

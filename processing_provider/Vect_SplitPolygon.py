@@ -65,7 +65,7 @@ class SplitPolygon(QgsProcessingFeatureBasedAlgorithm):
         return 'Split Polygons'
 
     def icon(self):
-        return QIcon(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images/vect_split_polygon.png'))
+        return QIcon(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images/vect_split_polygon.svg'))
     
     def displayName(self):
         return self.tr('Split Polygons', 'Split Polygons')

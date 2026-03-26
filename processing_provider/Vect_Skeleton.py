@@ -66,7 +66,7 @@ class Skeleton(QgsProcessingFeatureBasedAlgorithm):
         return 'Skeleton'
 
     def icon(self):
-        return QIcon(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images/vect_skeleton.png'))
+        return QIcon(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'images/vect_skeleton.svg'))
     
     def displayName(self):
         return self.tr('Skeleton', 'Skeleton')
