@@ -9,169 +9,924 @@
  ***************************************************************************/
 """
 
-__author__ = 'Thang Quach'
-__date__ = '2022-08-25'
-__copyright__ = '(L) 2022 by Thang Quach'
+__author__ = "Thang Quach"
+__date__ = "2022-08-25"
+__copyright__ = "(L) 2022 by Thang Quach"
 
 import unicodedata
 from qgis.core import *
 
-#_Unicode, _TCVN3, _VNIWin, _KhongDau
+# _Unicode, _TCVN3, _VNIWin, _KhongDau
 _Unicode = [
-u'â',u'Â',u'ă',u'Ă',u'đ',u'Đ',u'ê',u'Ê',u'ô',u'Ô',u'ơ',u'Ơ',u'ư',u'Ư',u'á',u'Á',u'à',u'À',u'ả',u'Ả',u'ã',u'Ã',u'ạ',u'Ạ',
-u'ấ',u'Ấ',u'ầ',u'Ầ',u'ẩ',u'Ẩ',u'ẫ',u'Ẫ',u'ậ',u'Ậ',u'ắ',u'Ắ',u'ằ',u'Ằ',u'ẳ',u'Ẳ',u'ẵ',u'Ẵ',u'ặ',u'Ặ',
-u'é',u'É',u'è',u'È',u'ẻ',u'Ẻ',u'ẽ',u'Ẽ',u'ẹ',u'Ẹ',u'ế',u'Ế',u'ề',u'Ề',u'ể',u'Ể',u'ễ',u'Ễ',u'ệ',u'Ệ',u'í',u'Í',u'ì',u'Ì',u'ỉ',u'Ỉ',u'ĩ',u'Ĩ',u'ị',u'Ị',    
-u'ó',u'Ó',u'ò',u'Ò',u'ỏ',u'Ỏ',u'õ',u'Õ',u'ọ',u'Ọ',u'ố',u'Ố',u'ồ',u'Ồ',u'ổ',u'Ổ',u'ỗ',u'Ỗ',u'ộ',u'Ộ',u'ớ',u'Ớ',u'ờ',u'Ờ',u'ở',u'Ở',u'ỡ',u'Ỡ',u'ợ',u'Ợ',    
-u'ú',u'Ú',u'ù',u'Ù',u'ủ',u'Ủ',u'ũ',u'Ũ',u'ụ',u'Ụ',u'ứ',u'Ứ',u'ừ',u'Ừ',u'ử',u'Ử',u'ữ',u'Ữ',u'ự',u'Ự',u'ỳ',u'Ỳ',u'ỷ',u'Ỷ',u'ỹ',u'Ỹ',u'ỵ',u'Ỵ',u'ý',u'Ý'    
+    "â",
+    "Â",
+    "ă",
+    "Ă",
+    "đ",
+    "Đ",
+    "ê",
+    "Ê",
+    "ô",
+    "Ô",
+    "ơ",
+    "Ơ",
+    "ư",
+    "Ư",
+    "á",
+    "Á",
+    "à",
+    "À",
+    "ả",
+    "Ả",
+    "ã",
+    "Ã",
+    "ạ",
+    "Ạ",
+    "ấ",
+    "Ấ",
+    "ầ",
+    "Ầ",
+    "ẩ",
+    "Ẩ",
+    "ẫ",
+    "Ẫ",
+    "ậ",
+    "Ậ",
+    "ắ",
+    "Ắ",
+    "ằ",
+    "Ằ",
+    "ẳ",
+    "Ẳ",
+    "ẵ",
+    "Ẵ",
+    "ặ",
+    "Ặ",
+    "é",
+    "É",
+    "è",
+    "È",
+    "ẻ",
+    "Ẻ",
+    "ẽ",
+    "Ẽ",
+    "ẹ",
+    "Ẹ",
+    "ế",
+    "Ế",
+    "ề",
+    "Ề",
+    "ể",
+    "Ể",
+    "ễ",
+    "Ễ",
+    "ệ",
+    "Ệ",
+    "í",
+    "Í",
+    "ì",
+    "Ì",
+    "ỉ",
+    "Ỉ",
+    "ĩ",
+    "Ĩ",
+    "ị",
+    "Ị",
+    "ó",
+    "Ó",
+    "ò",
+    "Ò",
+    "ỏ",
+    "Ỏ",
+    "õ",
+    "Õ",
+    "ọ",
+    "Ọ",
+    "ố",
+    "Ố",
+    "ồ",
+    "Ồ",
+    "ổ",
+    "Ổ",
+    "ỗ",
+    "Ỗ",
+    "ộ",
+    "Ộ",
+    "ớ",
+    "Ớ",
+    "ờ",
+    "Ờ",
+    "ở",
+    "Ở",
+    "ỡ",
+    "Ỡ",
+    "ợ",
+    "Ợ",
+    "ú",
+    "Ú",
+    "ù",
+    "Ù",
+    "ủ",
+    "Ủ",
+    "ũ",
+    "Ũ",
+    "ụ",
+    "Ụ",
+    "ứ",
+    "Ứ",
+    "ừ",
+    "Ừ",
+    "ử",
+    "Ử",
+    "ữ",
+    "Ữ",
+    "ự",
+    "Ự",
+    "ỳ",
+    "Ỳ",
+    "ỷ",
+    "Ỷ",
+    "ỹ",
+    "Ỹ",
+    "ỵ",
+    "Ỵ",
+    "ý",
+    "Ý",
 ]
 _TCVN3 = [
-u'©',u'¢',u'¨',u'¡',u'®',u'§',u'ª',u'£',u'«',u'¤',u'¬',u'¥',u'­',u'¦',u'¸',u'¸',u'µ',u'µ',u'¶',u'¶',u'·',u'·',u'¹',u'¹',
-u'Ê',u'Ê',u'Ç',u'Ç',u'È',u'È',u'É',u'É',u'Ë',u'Ë',u'¾',u'¾',u'»',u'»',u'¼',u'¼',u'½',u'½',u'Æ',u'Æ',
-u'Ð',u'Ð',u'Ì',u'Ì',u'Î',u'Î',u'Ï',u'Ï',u'Ñ',u'Ñ',u'Õ',u'Õ',u'Ò',u'Ò',u'Ó',u'Ó',u'Ô',u'Ô',u'Ö',u'Ö',u'Ý',u'Ý',u'×',u'×',u'Ø',u'Ø',u'Ü',u'Ü',u'Þ',u'Þ',    
-u'ã',u'ã',u'ß',u'ß',u'á',u'á',u'â',u'â',u'ä',u'ä',u'è',u'è',u'å',u'å',u'æ',u'æ',u'ç',u'ç',u'é',u'é',u'í',u'í',u'ê',u'ê',u'ë',u'ë',u'ì',u'ì',u'î',u'î',    
-u'ó',u'ó',u'ï',u'ï',u'ñ',u'ñ',u'ò',u'ò',u'ô',u'ô',u'ø',u'ø',u'õ',u'õ',u'ö',u'ö',u'÷',u'÷',u'ù',u'ù',u'ú',u'ú',u'û',u'û',u'ü',u'ü',u'þ',u'þ',u'ý',u'ý'     
+    "©",
+    "¢",
+    "¨",
+    "¡",
+    "®",
+    "§",
+    "ª",
+    "£",
+    "«",
+    "¤",
+    "¬",
+    "¥",
+    "­",
+    "¦",
+    "¸",
+    "¸",
+    "µ",
+    "µ",
+    "¶",
+    "¶",
+    "·",
+    "·",
+    "¹",
+    "¹",
+    "Ê",
+    "Ê",
+    "Ç",
+    "Ç",
+    "È",
+    "È",
+    "É",
+    "É",
+    "Ë",
+    "Ë",
+    "¾",
+    "¾",
+    "»",
+    "»",
+    "¼",
+    "¼",
+    "½",
+    "½",
+    "Æ",
+    "Æ",
+    "Ð",
+    "Ð",
+    "Ì",
+    "Ì",
+    "Î",
+    "Î",
+    "Ï",
+    "Ï",
+    "Ñ",
+    "Ñ",
+    "Õ",
+    "Õ",
+    "Ò",
+    "Ò",
+    "Ó",
+    "Ó",
+    "Ô",
+    "Ô",
+    "Ö",
+    "Ö",
+    "Ý",
+    "Ý",
+    "×",
+    "×",
+    "Ø",
+    "Ø",
+    "Ü",
+    "Ü",
+    "Þ",
+    "Þ",
+    "ã",
+    "ã",
+    "ß",
+    "ß",
+    "á",
+    "á",
+    "â",
+    "â",
+    "ä",
+    "ä",
+    "è",
+    "è",
+    "å",
+    "å",
+    "æ",
+    "æ",
+    "ç",
+    "ç",
+    "é",
+    "é",
+    "í",
+    "í",
+    "ê",
+    "ê",
+    "ë",
+    "ë",
+    "ì",
+    "ì",
+    "î",
+    "î",
+    "ó",
+    "ó",
+    "ï",
+    "ï",
+    "ñ",
+    "ñ",
+    "ò",
+    "ò",
+    "ô",
+    "ô",
+    "ø",
+    "ø",
+    "õ",
+    "õ",
+    "ö",
+    "ö",
+    "÷",
+    "÷",
+    "ù",
+    "ù",
+    "ú",
+    "ú",
+    "û",
+    "û",
+    "ü",
+    "ü",
+    "þ",
+    "þ",
+    "ý",
+    "ý",
 ]
 
 _VNIWin = [
-u'aâ',u'AÂ',u'aê',u'AÊ',u'ñ',u'Ñ',u'eâ',u'EÂ',u'oâ',u'OÂ',u'ô',u'Ô',u'ö',u'Ö',u'aù',u'AÙ',u'aø',u'AØ',u'aû',u'AÛ',u'aõ',u'AÕ',u'aï',u'AÏ',
-u'aá',u'AÁ',u'aà',u'AÀ',u'aå',u'AÅ',u'aã',u'AÃ',u'aä',u'AÄ',u'aé',u'AÉ',u'aè',u'AÈ',u'aú',u'AÚ',u'aü',u'AÜ',u'aë',u'AË',
-u'eù',u'EÙ',u'eø',u'EØ',u'eû',u'EÛ',u'eõ',u'EÕ',u'eï',u'EÏ',u'eá',u'EÁ',u'eà',u'EÀ',u'eå',u'EÅ',u'eã',u'EÃ',u'eä',u'EÄ',u'í',u'Í',u'ì',u'Ì',u'æ',u'Æ',u'ó',u'Ó',u'ò',u'Ò',    
-u'où',u'OÙ',u'oø',u'OØ',u'oû',u'OÛ',u'oõ',u'OÕ',u'oï',u'OÏ',u'oá',u'OÁ',u'oà',u'OÀ',u'oå',u'OÅ',u'oã',u'OÃ',u'oä',u'OÄ',u'ôù',u'ÔÙ',u'ôø',u'ÔØ',u'ôû',u'ÔÛ',u'ôõ',u'ÔÕ',u'ôï',u'ÔÏ',    
-u'uù',u'UÙ',u'uø',u'UØ',u'uû',u'UÛ',u'uõ',u'UÕ',u'uï',u'UÏ',u'öù',u'ÖÙ',u'öø',u'ÖØ',u'öû',u'ÖÛ',u'öõ',u'ÖÕ',u'öï',u'ÖÏ',u'yø',u'YØ',u'yû',u'YÛ',u'yõ',u'YÕ',u'î',u'Î',u'yù',u'YÙ'    
+    "aâ",
+    "AÂ",
+    "aê",
+    "AÊ",
+    "ñ",
+    "Ñ",
+    "eâ",
+    "EÂ",
+    "oâ",
+    "OÂ",
+    "ô",
+    "Ô",
+    "ö",
+    "Ö",
+    "aù",
+    "AÙ",
+    "aø",
+    "AØ",
+    "aû",
+    "AÛ",
+    "aõ",
+    "AÕ",
+    "aï",
+    "AÏ",
+    "aá",
+    "AÁ",
+    "aà",
+    "AÀ",
+    "aå",
+    "AÅ",
+    "aã",
+    "AÃ",
+    "aä",
+    "AÄ",
+    "aé",
+    "AÉ",
+    "aè",
+    "AÈ",
+    "aú",
+    "AÚ",
+    "aü",
+    "AÜ",
+    "aë",
+    "AË",
+    "eù",
+    "EÙ",
+    "eø",
+    "EØ",
+    "eû",
+    "EÛ",
+    "eõ",
+    "EÕ",
+    "eï",
+    "EÏ",
+    "eá",
+    "EÁ",
+    "eà",
+    "EÀ",
+    "eå",
+    "EÅ",
+    "eã",
+    "EÃ",
+    "eä",
+    "EÄ",
+    "í",
+    "Í",
+    "ì",
+    "Ì",
+    "æ",
+    "Æ",
+    "ó",
+    "Ó",
+    "ò",
+    "Ò",
+    "où",
+    "OÙ",
+    "oø",
+    "OØ",
+    "oû",
+    "OÛ",
+    "oõ",
+    "OÕ",
+    "oï",
+    "OÏ",
+    "oá",
+    "OÁ",
+    "oà",
+    "OÀ",
+    "oå",
+    "OÅ",
+    "oã",
+    "OÃ",
+    "oä",
+    "OÄ",
+    "ôù",
+    "ÔÙ",
+    "ôø",
+    "ÔØ",
+    "ôû",
+    "ÔÛ",
+    "ôõ",
+    "ÔÕ",
+    "ôï",
+    "ÔÏ",
+    "uù",
+    "UÙ",
+    "uø",
+    "UØ",
+    "uû",
+    "UÛ",
+    "uõ",
+    "UÕ",
+    "uï",
+    "UÏ",
+    "öù",
+    "ÖÙ",
+    "öø",
+    "ÖØ",
+    "öû",
+    "ÖÛ",
+    "öõ",
+    "ÖÕ",
+    "öï",
+    "ÖÏ",
+    "yø",
+    "YØ",
+    "yû",
+    "YÛ",
+    "yõ",
+    "YÕ",
+    "î",
+    "Î",
+    "yù",
+    "YÙ",
 ]
 
 _KhongDau = [
-u'a',u'A',u'a',u'A',u'd',u'D',u'e',u'E',u'o',u'O',u'o',u'O',u'u',u'U',u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',
-u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',u'a',u'A',
-u'e',u'E',u'e',u'E',u'e',u'E',u'e',u'E',u'e',u'E',u'e',u'E',u'e','uE',u'e',u'E',u'e',u'E',u'e',u'E',u'i',u'I',u'i',u'I',u'i',u'I',u'i',u'I',u'i',u'I',
-u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',u'o',u'O',
-u'u',u'U',u'u',u'U',u'u',u'U',u'u',u'U',u'u',u'U',u'u',u'U',u'u',u'U',u'u',u'U',u'u',u'U',u'u',u'U',u'y',u'Y',u'y',u'Y',u'y',u'Y',u'y',u'Y',u'y',u'Y'
+    "a",
+    "A",
+    "a",
+    "A",
+    "d",
+    "D",
+    "e",
+    "E",
+    "o",
+    "O",
+    "o",
+    "O",
+    "u",
+    "U",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "a",
+    "A",
+    "e",
+    "E",
+    "e",
+    "E",
+    "e",
+    "E",
+    "e",
+    "E",
+    "e",
+    "E",
+    "e",
+    "E",
+    "e",
+    "uE",
+    "e",
+    "E",
+    "e",
+    "E",
+    "e",
+    "E",
+    "i",
+    "I",
+    "i",
+    "I",
+    "i",
+    "I",
+    "i",
+    "I",
+    "i",
+    "I",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "o",
+    "O",
+    "u",
+    "U",
+    "u",
+    "U",
+    "u",
+    "U",
+    "u",
+    "U",
+    "u",
+    "U",
+    "u",
+    "U",
+    "u",
+    "U",
+    "u",
+    "U",
+    "u",
+    "U",
+    "u",
+    "U",
+    "y",
+    "Y",
+    "y",
+    "Y",
+    "y",
+    "Y",
+    "y",
+    "Y",
+    "y",
+    "Y",
 ]
 
-_VniWindows1= [    
-        u'ñ',u'Ñ',u'í',u'Í',u'ì',u'Ì',u'æ',u'Æ',u'ö',u'Ö',u'î',u'Î'    
+_VniWindows1 = ["ñ", "Ñ", "í", "Í", "ì", "Ì", "æ", "Æ", "ö", "Ö", "î", "Î"]
+_VniWindows2 = [
+    "aâ",
+    "AÂ",
+    "aê",
+    "AÊ",
+    "eâ",
+    "EÂ",
+    "ô",
+    "Ô",
+    "aù",
+    "AÙ",
+    "aø",
+    "AØ",
+    "aû",
+    "AÛ",
+    "aõ",
+    "AÕ",
+    "aï",
+    "AÏ",
+    "aá",
+    "AÁ",
+    "aà",
+    "AÀ",
+    "aå",
+    "AÅ",
+    "aã",
+    "AÃ",
+    "aä",
+    "AÄ",
+    "aé",
+    "AÉ",
+    "aè",
+    "AÈ",
+    "aú",
+    "AÚ",
+    "aü",
+    "AÜ",
+    "aë",
+    "AË",
+    "eù",
+    "EÙ",
+    "eø",
+    "EØ",
+    "eû",
+    "EÛ",
+    "eõ",
+    "EÕ",
+    "eï",
+    "EÏ",
+    "eá",
+    "EÁ",
+    "eà",
+    "EÀ",
+    "eå",
+    "EÅ",
+    "eã",
+    "EÃ",
+    "eä",
+    "EÄ",
+    "ó",
+    "Ó",
+    "ò",
+    "Ò",
+    "oû",
+    "OÛ",
+    "oõ",
+    "OÕ",
+    "oï",
+    "OÏ",
+    "oá",
+    "OÁ",
+    "oà",
+    "OÀ",
+    "oå",
+    "OÅ",
+    "oã",
+    "OÃ",
+    "oä",
+    "OÄ",
+    "ôù",
+    "ÔÙ",
+    "ôø",
+    "ÔØ",
+    "ôû",
+    "ÔÛ",
+    "ôõ",
+    "ÔÕ",
+    "ôï",
+    "ÔÏ",
+    "uù",
+    "UÙ",
+    "uø",
+    "UØ",
+    "uû",
+    "UÛ",
+    "uõ",
+    "UÕ",
+    "uï",
+    "UÏ",
+    "öù",
+    "ÖÙ",
+    "öø",
+    "ÖØ",
+    "öû",
+    "ÖÛ",
+    "öõ",
+    "ÖÕ",
+    "öï",
+    "ÖÏ",
+    "yø",
+    "YØ",
+    "yû",
+    "YÛ",
+    "yõ",
+    "YÕ",
+    "yù",
+    "YÙ",
+    "où",
+    "OÙ",
+    "oø",
+    "OØ",
+    "oâ",
+    "OÂ",
 ]
-_VniWindows2= [
-            u'aâ',u'AÂ',u'aê',u'AÊ',u'eâ',u'EÂ',u'ô',u'Ô',u'aù',u'AÙ',u'aø',u'AØ',u'aû',u'AÛ',u'aõ',u'AÕ',u'aï',u'AÏ',
-            u'aá',u'AÁ',u'aà',u'AÀ',u'aå',u'AÅ',u'aã',u'AÃ',u'aä',u'AÄ',u'aé',u'AÉ',u'aè',u'AÈ',u'aú',u'AÚ',u'aü',u'AÜ',u'aë',u'AË',
-            u'eù',u'EÙ',u'eø',u'EØ',u'eû',u'EÛ',u'eõ',u'EÕ',u'eï',u'EÏ',u'eá',u'EÁ',u'eà',u'EÀ',u'eå',u'EÅ',u'eã',u'EÃ',u'eä',u'EÄ',u'ó',u'Ó',u'ò',u'Ò',    
-            u'oû',u'OÛ',u'oõ',u'OÕ',u'oï',u'OÏ',u'oá',u'OÁ',u'oà',u'OÀ',u'oå',u'OÅ',u'oã',u'OÃ',u'oä',u'OÄ',u'ôù',u'ÔÙ',u'ôø',u'ÔØ',u'ôû',u'ÔÛ',u'ôõ',u'ÔÕ',u'ôï',u'ÔÏ',    
-            u'uù',u'UÙ',u'uø',u'UØ',u'uû',u'UÛ',u'uõ',u'UÕ',u'uï',u'UÏ',u'öù',u'ÖÙ',u'öø',u'ÖØ',u'öû',u'ÖÛ',u'öõ',u'ÖÕ',u'öï',u'ÖÏ',u'yø',u'YØ',u'yû',u'YÛ',u'yõ',u'YÕ',u'yù',u'YÙ',
-            u'où',u'OÙ',u'oø',u'OØ',u'oâ',u'OÂ'
-    ]
 
-_Unicode1= [   
-        u'đ',u'Đ',u'í',u'Í',u'ì',u'Ì',u'ỉ',u'Ỉ',u'ư',u'Ư',u'ỵ',u'Ỵ'      
-]   
-_Unicode2= [
-        u'â',u'Â',u'ă',u'Ă',u'ê',u'Ê',u'ơ',u'Ơ',u'á',u'Á',u'à',u'À',u'ả',u'Ả',u'ã',u'Ã',u'ạ',u'Ạ',
-        u'ấ',u'Ấ',u'ầ',u'Ầ',u'ẩ',u'Ẩ',u'ẫ',u'Ẫ',u'ậ',u'Ậ',u'ắ',u'Ắ',u'ằ',u'Ằ',u'ẳ',u'Ẳ',u'ẵ',u'Ẵ',u'ặ',u'Ặ',
-        u'é',u'É',u'è',u'È',u'ẻ',u'Ẻ',u'ẽ',u'Ẽ',u'ẹ',u'Ẹ',u'ế',u'Ế',u'ề',u'Ề',u'ể',u'Ể',u'ễ',u'Ễ',u'ệ',u'Ệ',u'ĩ',u'Ĩ',u'ị',u'Ị',    
-        u'ỏ',u'Ỏ',u'õ',u'Õ',u'ọ',u'Ọ',u'ố',u'Ố',u'ồ',u'Ồ',u'ổ',u'Ổ',u'ỗ',u'Ỗ',u'ộ',u'Ộ',u'ớ',u'Ớ',u'ờ',u'Ờ',u'ở',u'Ở',u'ỡ',u'Ỡ',u'ợ',u'Ợ',    
-        u'ú',u'Ú',u'ù',u'Ù',u'ủ',u'Ủ',u'ũ',u'Ũ',u'ụ',u'Ụ',u'ứ',u'Ứ',u'ừ',u'Ừ',u'ử',u'Ử',u'ữ',u'Ữ',u'ự',u'Ự',u'ỳ',u'Ỳ',u'ỷ',u'Ỷ',u'ỹ',u'Ỹ',u'ý',u'Ý',
-        u'ó#',u'Ó#',u'ò#',u'Ò#',u'ô#',u'Ô#'
-        ]
+_Unicode1 = ["đ", "Đ", "í", "Í", "ì", "Ì", "ỉ", "Ỉ", "ư", "Ư", "ỵ", "Ỵ"]
+_Unicode2 = [
+    "â",
+    "Â",
+    "ă",
+    "Ă",
+    "ê",
+    "Ê",
+    "ơ",
+    "Ơ",
+    "á",
+    "Á",
+    "à",
+    "À",
+    "ả",
+    "Ả",
+    "ã",
+    "Ã",
+    "ạ",
+    "Ạ",
+    "ấ",
+    "Ấ",
+    "ầ",
+    "Ầ",
+    "ẩ",
+    "Ẩ",
+    "ẫ",
+    "Ẫ",
+    "ậ",
+    "Ậ",
+    "ắ",
+    "Ắ",
+    "ằ",
+    "Ằ",
+    "ẳ",
+    "Ẳ",
+    "ẵ",
+    "Ẵ",
+    "ặ",
+    "Ặ",
+    "é",
+    "É",
+    "è",
+    "È",
+    "ẻ",
+    "Ẻ",
+    "ẽ",
+    "Ẽ",
+    "ẹ",
+    "Ẹ",
+    "ế",
+    "Ế",
+    "ề",
+    "Ề",
+    "ể",
+    "Ể",
+    "ễ",
+    "Ễ",
+    "ệ",
+    "Ệ",
+    "ĩ",
+    "Ĩ",
+    "ị",
+    "Ị",
+    "ỏ",
+    "Ỏ",
+    "õ",
+    "Õ",
+    "ọ",
+    "Ọ",
+    "ố",
+    "Ố",
+    "ồ",
+    "Ồ",
+    "ổ",
+    "Ổ",
+    "ỗ",
+    "Ỗ",
+    "ộ",
+    "Ộ",
+    "ớ",
+    "Ớ",
+    "ờ",
+    "Ờ",
+    "ở",
+    "Ở",
+    "ỡ",
+    "Ỡ",
+    "ợ",
+    "Ợ",
+    "ú",
+    "Ú",
+    "ù",
+    "Ù",
+    "ủ",
+    "Ủ",
+    "ũ",
+    "Ũ",
+    "ụ",
+    "Ụ",
+    "ứ",
+    "Ứ",
+    "ừ",
+    "Ừ",
+    "ử",
+    "Ử",
+    "ữ",
+    "Ữ",
+    "ự",
+    "Ự",
+    "ỳ",
+    "Ỳ",
+    "ỷ",
+    "Ỷ",
+    "ỹ",
+    "Ỹ",
+    "ý",
+    "Ý",
+    "ó#",
+    "Ó#",
+    "ò#",
+    "Ò#",
+    "ô#",
+    "Ô#",
+]
 
-def unaccent(text):	
+
+def unaccent(text):
     try:
-        text = text.replace(u'Đ', 'D') # For Vietnamese
-        text = text.replace(u'đ', 'd')  # For Vietnamese
+        text = text.replace("Đ", "D")  # For Vietnamese
+        text = text.replace("đ", "d")  # For Vietnamese
     except NameError:
         pass
-    result = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode("utf-8")
+    result = (
+        unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("utf-8")
+    )
     return result
-#unaccent('Quách Đồng Thắng, Krč,Koloměřice,Údraž,Poněšice,Hvožďany,Myšenec')
 
-def swapcase(text):	
-    return text.swapcase()    
-    #swapcase('Quách Đồng Thắng')
 
-def tcvn3_unicode (txt):
-    result = u''
+# unaccent('Quách Đồng Thắng, Krč,Koloměřice,Údraž,Poněšice,Hvožďany,Myšenec')
+
+
+def swapcase(text):
+    return text.swapcase()
+    # swapcase('Quách Đồng Thắng')
+
+
+def tcvn3_unicode(txt):
+    result = ""
     if txt != None:
         for c in txt:
             if c in _TCVN3:
                 idx = _TCVN3.index(c)
                 if idx >= 0:
-                    c = _Unicode[idx]        
+                    c = _Unicode[idx]
             result += c
     return result
 
-def unicode_tcvn3 (txt):
-    result = u''
+
+def unicode_tcvn3(txt):
+    result = ""
     if txt != None:
         for c in txt:
             if c in _Unicode:
                 idx = _Unicode.index(c)
                 if idx >= 0:
-                    c = _TCVN3[idx]        
+                    c = _TCVN3[idx]
             result += c
     return result
 
 
-def capitalize (txt):    
+def capitalize(txt):
     return txt.capitalize()
 
-def unicode_vni(txt):  
-    result = u''
+
+def unicode_vni(txt):
+    result = ""
     if txt != None:
         for c in txt:
             if c in _Unicode:
                 idx = _Unicode.index(c)
                 if idx >= 0:
-                    c = _VNIWin[idx]        
+                    c = _VNIWin[idx]
             result += c
     return result
 
+
 def vni_unicode(txt):
-    if txt != None: 
-        for j in range (0,len(txt)-1):
-            c = txt[j:j+2]     
-            if c in _VniWindows2:      
+    if txt != None:
+        for j in range(0, len(txt) - 1):
+            c = txt[j : j + 2]
+            if c in _VniWindows2:
                 idx = _VniWindows2.index(c)
                 if idx >= 0:
-                    c = _Unicode2[idx]                
-                txt = txt.replace(txt[j:j+2],c)
+                    c = _Unicode2[idx]
+                txt = txt.replace(txt[j : j + 2], c)
 
-        for j in range (0,len(txt)):
-            c = txt[j:j+1]
-            if c in _VniWindows1:      
+        for j in range(0, len(txt)):
+            c = txt[j : j + 1]
+            if c in _VniWindows1:
                 idx = _VniWindows1.index(c)
                 if idx >= 0:
-                    c = _Unicode1[idx]                
-                txt = txt.replace(txt[j:j+1],c)         
+                    c = _Unicode1[idx]
+                txt = txt.replace(txt[j : j + 1], c)
 
-        for i in range (0,len(txt)):       
-            c = txt[i:i+1]  
-            if c == u'ó'and txt[i+1:i+2] != u'#':
-                c= u'ĩ'
-                txt = txt[:i] + c + txt[i+1:]
-            elif c== u'Ó'and txt[i+1:i+2] != u'#':
-                c= u'Ĩ'
-                txt = txt[:i] + c + txt[i+1:]
-            elif c== u'ò'and txt[i+1:i+2] != u'#':
-                c= u'ị'
-                txt = txt[:i] + c + txt[i+1:]
-            elif c== u'Ò'and txt[i+1:i+2] != u'#':
-                c= u'Ị'
-                txt = txt[:i] + c + txt[i+1:]
-            elif c== u'ô'and txt[i+1:i+2] != u'#':
-                c= u'ơ'
-                txt = txt[:i] + c + txt[i+1:]
-            elif c== u'Ô'and txt[i+1:i+2] != u'#':
-                c= u'Ơ'
-                txt = txt[:i] + c + txt[i+1:]
+        for i in range(0, len(txt)):
+            c = txt[i : i + 1]
+            if c == "ó" and txt[i + 1 : i + 2] != "#":
+                c = "ĩ"
+                txt = txt[:i] + c + txt[i + 1 :]
+            elif c == "Ó" and txt[i + 1 : i + 2] != "#":
+                c = "Ĩ"
+                txt = txt[:i] + c + txt[i + 1 :]
+            elif c == "ò" and txt[i + 1 : i + 2] != "#":
+                c = "ị"
+                txt = txt[:i] + c + txt[i + 1 :]
+            elif c == "Ò" and txt[i + 1 : i + 2] != "#":
+                c = "Ị"
+                txt = txt[:i] + c + txt[i + 1 :]
+            elif c == "ô" and txt[i + 1 : i + 2] != "#":
+                c = "ơ"
+                txt = txt[:i] + c + txt[i + 1 :]
+            elif c == "Ô" and txt[i + 1 : i + 2] != "#":
+                c = "Ơ"
+                txt = txt[:i] + c + txt[i + 1 :]
 
-        txt = txt.replace(u'ó#',u'ó')
-        txt = txt.replace(u'Ó#',u'Ó')
-        txt = txt.replace(u'ò#',u'ò')
-        txt = txt.replace(u'Ò#',u'Ò')
-        txt = txt.replace(u'ô#',u'ô')
-        txt = txt.replace(u'Ô#',u'Ô')
+        txt = txt.replace("ó#", "ó")
+        txt = txt.replace("Ó#", "Ó")
+        txt = txt.replace("ò#", "ò")
+        txt = txt.replace("Ò#", "Ò")
+        txt = txt.replace("ô#", "ô")
+        txt = txt.replace("Ô#", "Ô")
     return txt
 
-def Convert(txt,source,target):    
-    result = u''
+
+def Convert(txt, source, target):
+    result = ""
     for c in txt:
         if c in source:
             idx = source.index(c)
@@ -180,47 +935,52 @@ def Convert(txt,source,target):
         result += c
     return result
 
+
 def GetEncodeIndex(encodeTxt):
-     return{
-        'Unicode' : _Unicode,
-        'TCVN3' : _TCVN3,
-        'VNI-Windows': _VNIWin,
-        'ANSI (Khong dau)' : _KhongDau
-    }.get(encodeTxt) 
+    return {
+        "Unicode": _Unicode,
+        "TCVN3": _TCVN3,
+        "VNI-Windows": _VNIWin,
+        "ANSI (Khong dau)": _KhongDau,
+    }.get(encodeTxt)
+
 
 def GetCaseIndex(caseText):
-    return{
+    return {
         0: None,
-        1: 'UPPER',
-        2: 'lower',
-        3: 'Capitalize Each Word',
-        4: 'Sentence case',
-        5: 'sWAP Case'
-    }.get(caseText) 
+        1: "UPPER",
+        2: "lower",
+        3: "Capitalize Each Word",
+        4: "Sentence case",
+        5: "sWAP Case",
+    }.get(caseText)
+
 
 def ChangeCase(str, caseIndex):
     result = str
     # Character Case-setting
-    if caseIndex == 'UPPER':
+    if caseIndex == "UPPER":
         result = str.upper()
-    elif caseIndex == 'lower':
+    elif caseIndex == "lower":
         result = str.lower()
-    elif caseIndex == 'Sentence case':
+    elif caseIndex == "Sentence case":
         result = str.capitalize()
-    elif caseIndex == 'Capitalize Each Word':
+    elif caseIndex == "Capitalize Each Word":
         result = str.title()
-    elif caseIndex ==  'sWAP Case':
-        result=str.swapcase()
+    elif caseIndex == "sWAP Case":
+        result = str.swapcase()
     return result
-    
+
+
 def convertfont(text, source_font, target_font, case):
     converted_text = text
-    if (source_font != None) and (target_font != None) and (source_font !=  target_font):   
-        if text != None:            
-            if (source_font == _VNIWin) and (target_font ==_Unicode):
+    if (source_font != None) and (target_font != None) and (source_font != target_font):
+        if text != None:
+            if (source_font == _VNIWin) and (target_font == _Unicode):
                 converted_text = vni_unicode(text)
-            else: converted_text = Convert(text,source_font,target_font)                   
-    # Change Character Case                            
-    if case !=None:
-        converted_text = ChangeCase(converted_text, case)                        
-    return 	converted_text
+            else:
+                converted_text = Convert(text, source_font, target_font)
+    # Change Character Case
+    if case != None:
+        converted_text = ChangeCase(converted_text, case)
+    return converted_text

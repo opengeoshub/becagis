@@ -21,13 +21,13 @@
  ***************************************************************************/
 """
 
-__author__ = 'Thang Quach'
-__date__ = '2022-08-25'
-__copyright__ = '(L) 2022 by Thang Quach'
+__author__ = "Thang Quach"
+__date__ = "2022-08-25"
+__copyright__ = "(L) 2022 by Thang Quach"
 
 # This will get replaced with a git SHA1 when you do a git archive
 
-__revision__ = '$Format:%H$'
+__revision__ = "$Format:%H$"
 import os
 from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
@@ -53,8 +53,8 @@ from becagis.processing_provider.Vect_ClosestFarthest import ClosestFarthest
 
 from becagis.processing_provider.Att_FontConvert import FontConvert
 
-class becagisProvider(QgsProcessingProvider):
 
+class becagisProvider(QgsProcessingProvider):
     def __init__(self):
         """
         Default constructor.
@@ -85,18 +85,18 @@ class becagisProvider(QgsProcessingProvider):
         self.addAlgorithm(DirectionalMerge())
         self.addAlgorithm(Lec())
         self.addAlgorithm(Mic())
-        self.addAlgorithm(ClosestFarthest())  
+        self.addAlgorithm(ClosestFarthest())
 
         self.addAlgorithm(FontConvert())
 
     def id(self):
-        return 'becagis'
+        return "becagis"
 
     def name(self):
-        return self.tr('BecaGIS Tools')
+        return self.tr("BecaGIS Tools")
 
     def icon(self):
-        return QIcon(os.path.dirname(__file__) + '/images/becagis_logo.png')
+        return QIcon(os.path.dirname(__file__) + "/images/becagis_logo.png")
 
     def longName(self):
         """

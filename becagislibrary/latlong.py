@@ -9,28 +9,34 @@
  ***************************************************************************/
 """
 
-__author__ = 'Thang Quach'
-__date__ = '2022-08-25'
-__copyright__ = '(L) 2022 by Thang Quach'
+__author__ = "Thang Quach"
+__date__ = "2022-08-25"
+__copyright__ = "(L) 2022 by Thang Quach"
 
-def antipode(lat,lon):
-    antipode_lat = - lat
-    if lon< 0:
-        antipode_lon = lon + 180 
-    else: antipode_lon = lon - 180  
-    return (antipode_lat,antipode_lon)
 
-def reversed_y(y,x):
-    reversed_y = - y
+def antipode(lat, lon):
+    antipode_lat = -lat
+    if lon < 0:
+        antipode_lon = lon + 180
+    else:
+        antipode_lon = lon - 180
+    return (antipode_lat, antipode_lon)
+
+
+def reversed_y(y, x):
+    reversed_y = -y
     reversed_x = x
-    return (reversed_y,reversed_x)
+    return (reversed_y, reversed_x)
 
-def reversed_x(y,x):
+
+def reversed_x(y, x):
     reversed_y = y
-    if x< 0:
-        reversed_x = x + 180 
-    else: reversed_x = x - 180  
-    return (reversed_y,reversed_x)
+    if x < 0:
+        reversed_x = x + 180
+    else:
+        reversed_x = x - 180
+    return (reversed_y, reversed_x)
 
-def swap_xy(y,x):
-    return (x,y)
+
+def swap_xy(y, x):
+    return (x, y)

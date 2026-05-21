@@ -23,9 +23,9 @@
 
 """
 
-__author__ = 'Thang Quach'
-__date__ = '2022-08-25'
-__copyright__ = '(L) 2022 by Thang Quach'
+__author__ = "Thang Quach"
+__date__ = "2022-08-25"
+__copyright__ = "(L) 2022 by Thang Quach"
 
 
 # noinspection PyPep8Naming
